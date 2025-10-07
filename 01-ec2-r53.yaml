@@ -9,7 +9,7 @@
   instances:
   - mongodb
   tasks:
-  - name : {{ item }}
+  - name : "{{ item }}"
     amazon.aws.ec2_instance:
     instance_type: {{ t3.micro }}
     security_group: {{ sg_id }}
