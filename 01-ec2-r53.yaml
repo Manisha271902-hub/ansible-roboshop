@@ -23,9 +23,9 @@
     register: ec2_output
 
 
-  - name : print the ec2 o/p
-    debug:
-      msg : "{{ ec2_output }}"
+  # - name : print the ec2 o/p
+  #   debug:
+  #     msg : "{{ ec2_output }}"
 
    # - name: print the ec2_output
   #   ansible.builtin.debug:
