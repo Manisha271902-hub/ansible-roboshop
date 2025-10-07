@@ -11,7 +11,7 @@
   tasks:
   - name : "{{ item }}"
     amazon.aws.ec2_instance:
-    instance_type: {{ t3.micro }}
+    instance_type: t3.micro 
     security_group: {{ sg_id }}
     image_id: {{ ami-id }}
     tags:
