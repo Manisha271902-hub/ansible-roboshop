@@ -19,7 +19,7 @@
       image_id: "{{ ami_id }}"
       tags:
         Name: "{{ item }}"
-    loop: "{{ instances | from_yaml }}"
+    loop: "{{ instances }}"
     register: ec2_output
 
 
