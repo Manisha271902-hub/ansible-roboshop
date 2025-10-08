@@ -1,5 +1,5 @@
 - name : setup redis server
-  hosts: redis
+  hosts: rabbitmq
   become: yes
   tasks:
   - name: copy rabbitmq repo
