@@ -5,7 +5,7 @@
   - name: copy mongodb repo
     ansible.builtin.copy:
       src: mongo.repo
-      dest: /etc/yum.repos.d/mongo.rep
+      dest: /etc/yum.repos.d/mongo.repo
 
   - name: Install mongodb
     ansible.builtin.package:
@@ -21,7 +21,7 @@
   - name : replace 
     ansible.builtin.replace:
       path: /etc/mongod.conf
-      regexp: '127.0.0.1'
+      regexp: '127\.0\.0\.1'
       replace: '0.0.0.0'
 
   - name: restart the service
