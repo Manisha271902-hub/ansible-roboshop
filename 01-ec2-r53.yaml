@@ -6,14 +6,14 @@
     sg_id: "sg-03d319dbe8210fee5" # replace with your SG ID
     zone_id: "ZZ0624414TCB3ROHH6GR0" # replace with your ID
     domain_name : "manisha.sbs"
-    instances:
-    - mongodb
-    - redis
-    - mysql
-    - rabbitmq
-    - catalogue
-    - cart 
-    - user
+    # instances:
+    # - mongodb
+    # - redis
+    # - mysql
+    # - rabbitmq
+    # - catalogue
+    # - cart 
+    # - user
   tasks:
   - name: create ec2 instance
     amazon.aws.ec2_instance:
