@@ -20,7 +20,7 @@
       name: roboshop
       shell: /sbin/nologin
       comment: roboshop system user
-      groups: developers
+      system: true
       create_home: yes
 
   - name: remove the directory first
