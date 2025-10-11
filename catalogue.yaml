@@ -22,21 +22,23 @@
       comment: roboshop system user
       system: true  #itla pedithe it makes the user as system account
       create_home: yes
+ 
+ #safe to remove directory, becasue if we run second time, it will download freshly....
 
-  # - name: remove the directory first
-  #   ansible.builtin.file:
-  #     path: /app
-  #     state: absent
+  - name: remove the directory first if already exists
+    ansible.builtin.file:
+      path: /app
+      state: absent
 
   - name: Create app directory
     ansible.builtin.file:
       path: /app
       state: directory
 
-  # - name: remove the catalogue file
-  #   ansible.builtin.file:
-  #     path: /tmp/catalogue.zip
-  #     state: absent
+  - name: remove the catalogue file (delete file)
+    ansible.builtin.file:
+      path: /tmp/catalogue.zip
+      state: absent
 
   - name: Download tthe catalogue applicaton
     ansible.builtin.get_url:
