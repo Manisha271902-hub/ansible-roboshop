@@ -33,10 +33,10 @@
       path: /app
       state: directory
 
-  - name: remove the catalogue file
-    ansible.builtin.file:
-      path: /tmp/catalogue.zip
-      state: absent
+  # - name: remove the catalogue file
+  #   ansible.builtin.file:
+  #     path: /tmp/catalogue.zip
+  #     state: absent
 
   - name: Download tthe catalogue applicaton
     ansible.builtin.get_url:
