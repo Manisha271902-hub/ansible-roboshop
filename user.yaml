@@ -1,5 +1,5 @@
-- name : setup catalogue server
-  hosts: catalogue
+- name : setup user server
+  hosts: user
   become: yes
   tasks:
   - name: disable nodejs 
@@ -22,8 +22,8 @@
       comment: roboshop system user
       system: true  #itla pedithe it makes the user as system account
       create_home: yes
- 
- #safe to remove directory, becasue if we run second time, it will download freshly....
+
+     #safe to remove directory, becasue if we run second time, it will download freshly....
 
   - name: remove the directory first if already exists
     ansible.builtin.file:
@@ -35,19 +35,19 @@
       path: /app
       state: directory
 
-  - name: remove the catalogue file (delete file)
+  - name: remove the user file (delete file)
     ansible.builtin.file:
-      path: /tmp/catalogue.zip
+      path: /tmp/user.zip
       state: absent
 
-  - name: Download tthe catalogue applicaton
+  - name: Download tthe user applicaton
     ansible.builtin.get_url:
-      url: https://roboshop-artifacts.s3.amazonaws.com/catalogue-v3.zip
-      dest: /tmp/catalogue.zip
+      url: https://roboshop-artifacts.s3.amazonaws.com/user-v3.zip
+      dest: /tmp/user.zip
   
-  - name: Unarchive catalogue applicaton
+  - name: extract user applicaton
     ansible.builtin.unarchive:
-      src: /tmp/catalogue.zip
+      src: /tmp/user.zip
       dest: /app
       remote_src: yes
   
@@ -56,42 +56,16 @@
     community.general.npm:
       path: /app
 
-  - name: Copy catalogue service
+  - name: Copy user service
     ansible.builtin.copy:
-      src: catalogue.service
-      dest: /etc/systemd/system/catalogue.service
+      src: user.service
+      dest: /etc/systemd/system/user.service
 
    
-  - name: Copy mongo.repo
-    ansible.builtin.copy:
-      src: mongo.repo
-      dest: /etc/yum.repos.d/mongo.repo
-
-
-  - name: Install mongodb
-    ansible.builtin.package:
-      name: mongodb-mongosh
-      state: present
-
-  - name: connnect to mongodb catalogue
-    ansible.builtin.command: mongosh mongodb.manisha.sbs --quiet --eval "db.getMongo().getDBNames().indexOf('catalogue')"
-    register: catalogue_output
-  
-
-  - name: print catalogue output
-    ansible.builtin.debug:
-      msg: "{{ catalogue_output }}"
-
-  - name: load products into mongodb
-    ansible.builtin.shell: mongosh --host mongodb.manisha.sbs </app/db/master-data.js
-    when: catalogue_output.stdout | int < 0
-
-
   - name: daemon reload enable and start
     ansible.builtin.systemd_service:
       name: user
       enabled: true
       state: started
       daemon_reload: true
-
 
