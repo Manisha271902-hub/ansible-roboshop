@@ -6,11 +6,14 @@
     sg_id: "sg-03d319dbe8210fee5" # replace with your SG ID
     zone_id: "Z00482152LZTYSZ6IMD7R" # replace with your ID
     domain_name : "manisha.sbs"
-    instances:
-    - mongodb
-    - redis
-    - mysql
-    - rabbitmq
+
+    #comment here and we can pass instacnes through cmd line using -e
+
+    # instances:
+    # - mongodb
+    # - redis
+    # - mysql
+    # - rabbitmq
     # - catalogue
     # - cart 
     # - user
@@ -27,9 +30,9 @@
     register: ec2_output
 
 
-  - name: print the ec2_output
-    ansible.builtin.debug:
-      msg: "{{ ec2_output }}"
+  # - name: print the ec2_output
+  #   ansible.builtin.debug:
+  #     msg: "{{ ec2_output }}"
 
   # - name: print public_ip
   #   ansible.builtin.debug: 
