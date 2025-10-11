@@ -1,0 +1,71 @@
+- name : setup cart server
+  hosts: cart
+  become: yes
+  tasks:
+  - name: disable nodejs 
+    ansible.builtin.command:
+      dnf module disable nodejs -y
+
+  - name: enable nodejs 
+    ansible.builtin.command:
+      dnf module enable nodejs:20 -y
+
+  - name: Install nodejs
+    ansible.builtin.package:
+      name: nodejs
+      state: present
+
+  - name: create roboshop system user
+    ansible.builtin.cart:
+      name: roboshop
+      shell: /sbin/nologin
+      comment: roboshop system user
+      system: true  #itla pedithe it makes the user as system account
+      create_home: yes
+
+     #safe to remove directory, becasue if we run second time, it will download freshly....
+
+  - name: remove the directory first if already exists
+    ansible.builtin.file:
+      path: /app
+      state: absent
+
+  - name: Create app directory
+    ansible.builtin.file:
+      path: /app
+      state: directory
+
+  - name: remove the cart file (delete file)
+    ansible.builtin.file:
+      path: /tmp/cart.zip
+      state: absent
+
+  - name: Download tthe cart applicaton
+    ansible.builtin.get_url:
+      url: https://roboshop-artifacts.s3.amazonaws.com/cart-v3.zip
+      dest: /tmp/cart.zip
+  
+  - name: extract cart applicaton
+    ansible.builtin.unarchive:
+      src: /tmp/cart.zip
+      dest: /app
+      remote_src: yes
+  
+  #akadikelli pakages anni install chesestadi depending on package.json
+  - name: install dependencies
+    community.general.npm:
+      path: /app
+
+  - name: Copy cart service
+    ansible.builtin.copy:
+      src: cart.service
+      dest: /etc/systemd/system/cart.service
+
+   
+  - name: daemon reload enable and start
+    ansible.builtin.systemd_service:
+      name: cart
+      enabled: true
+      state: started
+      daemon_reload: true
+
