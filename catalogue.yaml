@@ -20,13 +20,13 @@
       name: roboshop
       shell: /sbin/nologin
       comment: roboshop system user
-      system: true
+      system: true  #itla pedithe it makes the user as system account
       create_home: yes
 
-  - name: remove the directory first
-    ansible.builtin.file:
-      path: /app
-      state: absent
+  # - name: remove the directory first
+  #   ansible.builtin.file:
+  #     path: /app
+  #     state: absent
 
   - name: Create app directory
     ansible.builtin.file:
@@ -49,10 +49,10 @@
       dest: /app
       remote_src: yes
   
-  #akadikelli pakages anni install chesestadi depending on package.json
-  - name: install dependencies
-    community.general.npm:
-      path: /app
+  # #akadikelli pakages anni install chesestadi depending on package.json
+  # - name: install dependencies
+  #   community.general.npm:
+  #     path: /app
 
   
 
