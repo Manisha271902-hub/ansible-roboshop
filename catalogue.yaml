@@ -49,3 +49,10 @@
       dest: /app
       remote_src: yes
   
+  #akadikelli pakages anni install chesestadi depending on package.json
+  - name: install dependencies
+    community.general.npm:
+      path: /app
+
+  
+
